@@ -1,14 +1,20 @@
 #include <string>
 #include <vector>
 #include <cctype>
+
+#include <iostream>
+#include <fstream> 
+
 using namespace std;
 
 
 
 //TODO
+//implement knownNames
+//test functions
 
-//Varible Names
-//in fucture would like to consider scope, ie globle
+vector <string> knownNames;
+
 vector<float> varNames(string line){ //right now plan to store in profile
     //strip start
     size_t offset=0;
@@ -29,7 +35,7 @@ vector<float> varNames(string line){ //right now plan to store in profile
     size_t Eindex = line.find("=");
     if (Eindex!=string::npos && line.find("==")==string::npos && line.find("===")==string::npos){
         if (offset>=Eindex){
-            size_t offset=0;
+            offset=0;
         }
 
         string var = line.substr(offset, Eindex);
@@ -59,7 +65,7 @@ vector<float> varNames(string line){ //right now plan to store in profile
             }
             else {
                 int capCount=0;
-                for (int i=0; i<var.length(); i++) {
+                for (int i=0; i<(int) var.size(); i++) {
                     if (isupper(var.at(i))){
                         capCount++;
                     }
@@ -90,24 +96,35 @@ vector<float> varNames(string line){ //right now plan to store in profile
 } 
 
 //Tab vs Spaces
+//tested and working
 int tabSpace(string line){
     //assume it will be first char
     //0 for error/niether, 1 for tab, 2 for space
     char tab=char(9);
-    if (line.at(0)==tab){
-        return 1;
+    try
+    {
+        if (line.at(0)==tab){
+         return 1;
+        }
+        else if (line.at(0)==' '){
+            return 2;
+        }
+        else{
+            return 0;
+        }
     }
-    if (line.at(0)==' '){
-        return 2;
-    }
-    else{
+
+    catch(const std::exception& e)
+    {
         return 0;
     }
 }
 
 // ' = ' vs '=' 
+//tested and working
 int equalSpacing(string line){
-    //return 1 for " = " and 2 for "="
+    //return 1 for " = " and 2 for "=" and 0 for none
+    //assume at most one assigment (=) per line and not = && == on same line
     size_t Eindex = line.find("=");
     if (Eindex!=string::npos && line.find("==")==string::npos 
     && line.find("===")==string::npos){
@@ -118,9 +135,11 @@ int equalSpacing(string line){
             return 2;
         }
     }
+    return 0;
 }
     
 //Empty Lines
+//tested and working
 int emptyLine(string line){
     // allow ' ' '\n' tab 
     for (int i=33; i<127; i++){
@@ -131,19 +150,23 @@ int emptyLine(string line){
     return 1;
 }
 
-//!=NULL
-int nullForm(string line){
-    int count=0;
-    size_t offset=line.find("!=null");
-    if (offset==string::npos){
+//used for nullform, checks for if statment and if that statment does not use logical opperators
+//fairly simple, should add in more complexity
+//things like a==NULL vs !a
+int boolif(string line){
+    // 0 for not applicable if or line, 1 for applicable if but not null, 2 for applicable if and null
+    if  (line.find("if")!=string::npos){
+        if (line.find("!=NULL")!=string::npos){
+            return 2;
+        }
+        for (auto & element : knownNames) {
+            string temp = "(" + element + ")";
+            if (line.find(temp)!=string::npos){
+                return 1;
+            }
+        }
         return 0;
     }
-    while (offset){
-        line=line.substr(offset,line.length()-1);
-        count++;
-        offset=line.find("!=null");
-    }
-    return count;
 }
 
 //not done // ++ vs +=1 vs a=a+1
@@ -171,6 +194,7 @@ vector<int> increment (string line){
         a[3]=a[3]+1;
         temp=temp.substr(temp.find("-="),temp.length());        
     }
+    return a;
 }
 
 // \n after . 

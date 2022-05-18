@@ -12,7 +12,7 @@ int equalSpacing(string line);
 
 int emptyLine(string line);
 
-int nullForm(string line);
+int boolif(string line);
 
 vector<int> increment (string line);
 
