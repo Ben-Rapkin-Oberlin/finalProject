@@ -52,7 +52,7 @@ int varNames(string line)
     size_t startI;
     size_t endI;
 
-    int names;
+    int names=0;
 
     bool dash = false;
     bool underScore = false;

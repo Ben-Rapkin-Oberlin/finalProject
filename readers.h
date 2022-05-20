@@ -3,8 +3,9 @@
 #include <cctype>
 using namespace std;
 
+extern vector<string> knownNames;
 
-vector<float> varNames(string line);
+int varNames(string line);
 
 int tabSpace(string line);
 

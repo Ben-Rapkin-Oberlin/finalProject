@@ -10,7 +10,7 @@
 using namespace std;
 
 int main(){
-    string fname="C:\\Users\\benra\\Documents\\Academics\\Spring 22\\Systems (241)\\Final\\pig.c";
+    string fname="C:\\Users\\benra\\Documents\\Academics\\Spring 22\\Systems (241)\\finalProject\\smallp.c";
     fstream newfile;
     newfile.open(fname,ios::in);
 
@@ -32,11 +32,18 @@ int main(){
     int bspace=0;//ratiofreq
     int bcount=0;
     
+    vector<int> names(11,0); //10 indexes initialized to 0
+    for (auto i: names){
+        std::cout << i << ", ";
+    }
+     std::cout << '\n';
     if (newfile.is_open()){   //checking whether the file is open
         string line;
 
         while(getline(newfile, line)){ 
             linec++;
+           // std::cout << line << "   "  << linec << " c\n";
+
 
             /////
             icount+=imports(line);
@@ -74,6 +81,19 @@ int main(){
             }
 
             ////
+            try{
+                a=varNames(line);
+                if (a!=0){
+                names[a]=names[a]+1;
+                }
+            }
+            catch(const std::exception& e){
+                std::cout << line << '\n';
+                std::cout << linec << " c\n";
+
+            }
+
+            
         }
     }
 
@@ -85,6 +105,11 @@ int main(){
     std::cout << "tspace: " <<(float) tspace/tcount << '\n';
     std::cout << "nspace: " <<(float) mspace/linec << '\n';
    // std::cout << "nspace: " <<(float) bspace/bcount << '\n';
+
+    for (auto i: names){
+        std::cout << i << ", ";
+    }
+    std::cout << '\n';
 
     //call each method
     //add those to runing total

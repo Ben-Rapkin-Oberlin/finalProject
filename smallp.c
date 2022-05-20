@@ -9,6 +9,14 @@
 			//otherwise, pretend no vowels found
 
 int leadingVowel(char *word, int count){
+    int a_a;
+    int a_A;
+    int A_A;
+    int aA;
+    int CapCase;
+    int AA;
+    int aa;
+
     //check for capitalization
     //aeiou. 
     //!qu, it's a con
