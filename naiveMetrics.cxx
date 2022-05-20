@@ -5,6 +5,8 @@
 #include <iostream>
 #include <fstream>
 
+#include <algorithm>
+
 using namespace std;
 
 // TODO
@@ -13,6 +15,34 @@ using namespace std;
 
 vector<string> knownNames;
 
+// Tab vs Spaces
+// tested and working
+int tabSpace(string line)
+{
+    // assume it will be first char
+    // 0 for error/niether, 1 for tab, 2 for space
+    char tab = char(9);
+    try
+    {
+        if (line.at(0) == tab)
+        {
+            return 1;
+        }
+        else if (line.at(0) == ' ')
+        {
+            return 2;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    catch (const std::exception &e)
+    {
+        return 0;
+    }
+}
 
 //TODO consider multiple declarations per line
 int varNames(string line)
@@ -105,7 +135,7 @@ int varNames(string line)
         if (std::find(knownNames.begin(), knownNames.end(), var) == knownNames.end()){
             return 0;
         }
-        
+
         knownNames.push_back(var);
         if (underScore)
         {
@@ -193,35 +223,6 @@ int varNames(string line)
     return names;
 }
 
-// Tab vs Spaces
-// tested and working
-int tabSpace(string line)
-{
-    // assume it will be first char
-    // 0 for error/niether, 1 for tab, 2 for space
-    char tab = char(9);
-    try
-    {
-        if (line.at(0) == tab)
-        {
-            return 1;
-        }
-        else if (line.at(0) == ' ')
-        {
-            return 2;
-        }
-        else
-        {
-            return 0;
-        }
-    }
-
-    catch (const std::exception &e)
-    {
-        return 0;
-    }
-}
-
 // ' = ' vs '='
 // tested and working
 int equalSpacing(string line)
@@ -278,8 +279,8 @@ int boolif(string line)
                 return 1;
             }
         }
-        return 0;
     }
+    return 0;
 }
 
 // not done // ++ vs +=1 vs a=a+1
