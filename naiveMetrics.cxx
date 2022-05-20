@@ -15,36 +15,52 @@ using namespace std;
 
 vector <string> knownNames;
 
-vector<float> varNames(string line){ //right now plan to store in profile
+//should modify to store name at end using var
+//should change to return int, can use that as a vector index in main
+int varNames(string line){ //right now plan to store in profile
     //strip start
     size_t offset=0;
+    size_t startI;
+    size_t endI;
+    int names;
     //vscode changes tab to space
-    char tab=char(9);
+    char tab = char(9);
+    int a=tabSpace(line);
 
-    if (line.find(tab)!=string::npos){
-        offset=line.find(tab);
+    //assumes tabs will only be used at the start of a line
+    if (a==1){//there are tabs and we are removing them
+        while(line.find(tab)!=string::npos){
+            line=line.substr(line.find(tab)+1);  
+        }
+    }
+    if (a==2){
+        while (!isalpha(line.at(offset))){
+            offset++;
+        }
     }
 
-    //assuming tab won't be other than offseting
-    else if (line.find(" ")!=string::npos){
-        offset=line.find(" ");
+    //TODO
+    //check for multiple varibles: int a,b =0;
+    /*if (line.find(",")!=string::npos){ 
     }
+    */
 
-    //make data of var names so we only store each once
-    vector<float> names(7,0); //7 indexs all to 0
-    size_t Eindex = line.find("=");
+   size_t Eindex = line.find("=");
     if (Eindex!=string::npos && line.find("==")==string::npos && line.find("===")==string::npos){
         if (offset>=Eindex){
             offset=0;
         }
-
-        string var = line.substr(offset, Eindex);
+        
+        string var = line.substr(offset+1, Eindex-offset);
+        //at this point, var is of form int a_a, A_A, a-a, aa, AA, Aa
 
             if (var.find("_")!=string::npos){
                 //snake_Case,
-                size_t Uindex=var.find("_");                
+                size_t Uindex=var.find("_");      
                 if (isupper(var.at(Uindex+1))){
                     //upper or snake
+                    startI=Uindex-1;
+                    endI=Uindex+1;
                     if (isupper(var.at(Uindex-1))){
                         //upper
                         names[0]=names[0]+1;
@@ -53,10 +69,20 @@ vector<float> varNames(string line){ //right now plan to store in profile
                         //snake
                         names[1]=names[1]+1;
                     }
+                    knownNames.push_back(var.substr(startI,endI-startI+1));
                 }
                 else {
                     //lower, assuming no odD_case
                     names[2]=names[2]+1;
+                    endI=Eindex;
+                    startI=offset;
+                    while(!isalpha(var.at(endI))){
+                        endI--;
+                    }
+                    while (isalpha(var.at(startI+1))){
+                        startI++;
+                    }
+                    knownNames.push_back(var.substr(startI,endI-startI+1));
                 }
             }
             else if (var.find("-")!=string::npos){
@@ -83,6 +109,15 @@ vector<float> varNames(string line){ //right now plan to store in profile
                     names[6]=names[6]+1;
                 }
             }
+        endI=var.length();
+        startI=0;
+
+        while(!isalpha(var.at(endI))){
+            endI--;
+        }
+        while (!isalpha(var.at(startI+1))){
+            startI++;
+        }
         //call profile to store prevelance
         float sum=0;
         for (int i=0; i<7; i++){
@@ -170,6 +205,7 @@ int boolif(string line){
 }
 
 //not done // ++ vs +=1 vs a=a+1
+//substr is (pos,len from pos, including pos) will need to rewrite code
 vector<int> increment (string line){
     //++ -- += -= these corraspond to vector indexes
     vector<int> a={0,0,0,0}; 
