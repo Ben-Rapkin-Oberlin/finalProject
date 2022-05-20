@@ -45,6 +45,7 @@ int tabSpace(string line)
 }
 
 //TODO consider multiple declarations per line
+//TODO consider array names
 int varNames(string line)
 { // right now plan to store in profile
     // strip start
@@ -73,6 +74,9 @@ int varNames(string line)
         while (!isalpha(line.at(offset)))
         {
             offset++;
+            if (offset>=line.length()){
+                return 0;
+            }
         }
     }
 
