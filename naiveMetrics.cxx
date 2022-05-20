@@ -45,6 +45,7 @@ int tabSpace(string line)
 }
 
 //TODO consider multiple declarations per line
+//TODO consider array names
 int varNames(string line)
 { // right now plan to store in profile
     // strip start
@@ -73,6 +74,9 @@ int varNames(string line)
         while (!isalpha(line.at(offset)))
         {
             offset++;
+            if (offset>=line.length()){
+                return 0;
+            }
         }
     }
 
@@ -132,7 +136,7 @@ int varNames(string line)
         //if var is already in knowNames it's naming convention has been recorded
         //Thus we return as we don't want to count "int a;" and "a=3;" as seperate
         //varibles
-        if (std::find(knownNames.begin(), knownNames.end(), var) == knownNames.end()){
+        if (std::find(knownNames.begin(), knownNames.end(), var) != knownNames.end()){
             return 0;
         }
 
@@ -202,12 +206,12 @@ int varNames(string line)
                 // camelCase
                 names = 7;
             }
-            else if (capCount == 2)
+            else if (capCount == 2 && var.length()>2)
             {
                 // CapitalCase
                 names = 8;
             }
-            else if (capCount > 2)
+            else if (capCount >= 2)
             {
                 // all caps
                 names = 9;
