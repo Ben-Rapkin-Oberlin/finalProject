@@ -85,6 +85,7 @@ int main(){
                 a=varNames(line);
                 if (a!=0){
                 names[a]=names[a]+1;
+                std::cout << line << "   "  << linec << " " << a <<" c\n";
                 }
             }
             catch(const std::exception& e){
