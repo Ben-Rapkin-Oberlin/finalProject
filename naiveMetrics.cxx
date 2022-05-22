@@ -44,8 +44,9 @@ int tabSpace(string line)
     }
 }
 
-//TODO consider multiple declarations per line
-//TODO consider array names
+// TODO consider multiple declarations per line
+// TODO consider array names
+// Other than TODO, tested and working
 int varNames(string line)
 { // right now plan to store in profile
     // strip start
@@ -53,7 +54,7 @@ int varNames(string line)
     size_t startI;
     size_t endI;
 
-    int names=0;
+    int names = 0;
 
     bool dash = false;
     bool underScore = false;
@@ -74,7 +75,8 @@ int varNames(string line)
         while (!isalpha(line.at(offset)))
         {
             offset++;
-            if (offset>=line.length()){
+            if (offset >= line.length())
+            {
                 return 0;
             }
         }
@@ -132,11 +134,12 @@ int varNames(string line)
             }
         }
         var = var.substr(startI, endI - startI + 1);
-    
-        //if var is already in knowNames it's naming convention has been recorded
-        //Thus we return as we don't want to count "int a;" and "a=3;" as seperate
-        //varibles
-        if (std::find(knownNames.begin(), knownNames.end(), var) != knownNames.end()){
+
+        // if var is already in knowNames it's naming convention has been recorded
+        // Thus we return as we don't want to count "int a;" and "a=3;" as seperate
+        // varibles
+        if (std::find(knownNames.begin(), knownNames.end(), var) != knownNames.end())
+        {
             return 0;
         }
 
@@ -206,7 +209,7 @@ int varNames(string line)
                 // camelCase
                 names = 7;
             }
-            else if (capCount == 2 && var.length()>2)
+            else if (capCount == 2 && var.length() > 2)
             {
                 // CapitalCase
                 names = 8;
@@ -263,28 +266,77 @@ int emptyLine(string line)
     return 1;
 }
 
-// used for nullform, checks for if statment and if that statment does not use logical opperators
-// fairly simple, should add in more complexity
 // things like a==NULL vs !a
-int boolif(string line)
+// (a!=NULL) vs (a)
+// (a==NULL) vs (!a)
+// (a==0) vs (!a)
+// (a!=0) vs (a)
+// c doesn't have TRUE FALSE, TRUE= !0, False=0, Null is present
+// does not consiter a statment like: result = a > b ? x : y;
+vector<int> verboseif(string line)
 {
-    // 0 for not applicable if or line, 1 for applicable if but not null, 2 for applicable if and null
+    vector<int> count={0,0};// [0] for applicable but not verbose, [1] for applicable and verbose
     if (line.find("if") != string::npos)
     {
-        if (line.find("!=NULL") != string::npos)
-        {
-            return 2;
+        if  (line.find("if")>line.find("/") && line.find("/")!= string::npos) // check to make sure not reading a comment
+        {// i have both becuase I'm not sure how int compares to string::npos
+            return count;
         }
-        for (auto &element : knownNames)
+        // c doesn't have 'or' 'and'
+        vector<string> list;
+
+        list.push_back(line);
+        // split if statment into args, first &&
+        // "if (a || b && c || d)"" -> "if (a || b ", " c||d)"
+        for (int i = 0; i < (int) list.size(); i++)
         {
-            string temp = "(" + element + ")";
-            if (line.find(temp) != string::npos)
+            string temp = list[i];
+            if (line.find("&") != string::npos)
             {
-                return 1;
+                list[i] = temp.substr(0, line.find("&"));
+                list.push_back(temp.substr(line.find("&") + 2));
+                i = 0;
+            }
+        }
+        // now further split by ||
+        //"if (a || b ", " c||d)" -> "if (a ", " b ", " c", " d)"
+        for (int i = 0; i < (int) list.size(); i++)
+        {
+            string temp = list[i];
+            if (temp.find("|") != string::npos)
+            {
+                list[i] = temp.substr(0, temp.find("|"));
+                list.push_back(temp.substr(temp.find("|") + 2));
+                
+            }
+        }
+        // now check each arg
+        for (auto i : list)
+        {
+            // not currently considering a==1, maybe be being used in a none boolean sense
+
+            if (i.find("<")!= string::npos || i.find(">")!= string::npos)
+            {
+                continue; // just here to stop it from checking every other statment
+            }
+            // current possible args: (a!=NULL), (a), (a==NULL), (!a), (a==0), (a!=0)
+            else if (i.find("NULL") != string::npos)
+            {
+                count[1] = count[1] + 1; // verbose
+            }
+            // current possible args: (a), (!a), (a==0), (a!=0)
+            else if (i.find("==0") != string::npos || i.find("!=0") != string::npos)
+            {
+                count[1] = count[1] + 1; // verbose
+            }
+            // current possible args: (a), (!a) and we will assume it is one of these
+            else if (i.find("==")==string::npos)
+            {
+                count[0] = count[0] + 1;
             }
         }
     }
-    return 0;
+    return count;
 }
 
 // not done // ++ vs +=1 vs a=a+1

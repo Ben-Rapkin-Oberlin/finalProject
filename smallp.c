@@ -17,6 +17,13 @@ int leadingVowel(char *word, int count){
     int AA=0;
     int aa=0;
 
+
+    if (aa!=NULL)
+    if (aa!=0)
+    if ((aa==NULL))
+    if (aa==0)
+    if (a)
+    if (!a)
     //check for capitalization
     //aeiou. 
     //!qu, it's a con

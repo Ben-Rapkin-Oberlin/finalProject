@@ -30,8 +30,8 @@ int main()
     // empty lines
     int mspace = 0; // wholefreq
     //! NULL
-    int bspace = 0; // ratiofreq
-    int bcount = 0;
+    int verbose = 0; // ratiofreq
+    int nVerbose = 0;
 
     vector<int> names(11, 0); // 10 indexes initialized to 0
     std::cout << '\n';
@@ -71,21 +71,18 @@ int main()
                 mspace++;
             }
 
-            ////
-            // not ready must implment knownNames
-            a = boolif(line);
-            if (a == 1)
+            //// 
+            vector<int> b = verboseif(line);
+            if (b[0]!=0)
             {
-                bcount++;
+                nVerbose+=b[0];
             }
-            else if (a == 2)
+             if (b[1]!=0)
             {
-                bcount++;
-                bspace++;
-            }
+                verbose+=b[1];
+            }            
 
             ////
-
             a = varNames(line);
             if (a != 0)
             {
@@ -93,22 +90,27 @@ int main()
             }
         }
     }
-        std::cout << "imports: " << icount << '\n';
-        std::cout << "Main Ratio: " << r << '\n';
+    std::cout << "imports: " << icount << '\n';
+    std::cout << "Main Ratio: " << r << '\n';
 
-        std::cout << "espace: " << (float)eSpace / ecount << '\n';
-        std::cout << "tspace: " << (float)tspace / tcount << '\n';
-        std::cout << "nspace: " << (float)mspace / linec << '\n';
-        // std::cout << "nspace: " <<(float) bspace/bcount << '\n';
+    std::cout << "espace: " << (float)eSpace / ecount << '\n';
+    std::cout << "tspace: " << (float)tspace / tcount << '\n';
+    std::cout << "nspace: " << (float)mspace / linec << '\n';
+    std::cout << "Verbose: " <<(float) verbose / nVerbose << '\n';
 
-        for (auto i : names)
-        {
-            std::cout << i << ", ";
-        }
-        std::cout << '\n';
-
-        // call each method
-        // add those to runing total
-        // repeat
-        // save to file/profile
+    for (auto i : names)
+    {
+        std::cout << i << ", ";
     }
+
+    std::cout << '\n';
+    for (auto i : knownNames)
+    {
+        std::cout << i << ", ";
+    }
+
+    // call each method
+    // add those to runing total
+    // repeat
+    // save to file/profile
+}
