@@ -31,6 +31,8 @@ int leadingVowel(char *word, int count){
     a+=1;
     a-=1;
     a+++=
+    a = a + 1;
+    a_A= a_A+1;
 
     a.foo().boo();
 

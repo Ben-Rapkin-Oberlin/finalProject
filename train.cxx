@@ -161,8 +161,8 @@ int main()
     std::cout << "--: " << (float)sdec / total << '\n';
     std::cout << "+=: " << (float)cinc / total << '\n';
     std::cout << "-=: " << (float)cdec / total << '\n';
-    std::cout << "+=: " << (float)vinc / total << '\n';
-    std::cout << "-=: " << (float)vdec / total << '\n';
+    std::cout << "a=a+1: " << (float)vinc / total << '\n';
+    std::cout << "a=a-1: " << (float)vdec / total << '\n';
 
     
 
