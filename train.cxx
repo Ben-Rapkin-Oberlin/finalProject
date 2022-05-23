@@ -15,8 +15,11 @@ int main()
     fstream newfile;
     newfile.open(fname, ios::in);
 
+    // TODO make imports abs count
+    // TODO make comment/multy comment tester
+
     // imports
-    int icount = 0; // wholefreq
+    int icount = 0; // wholefreq 
     // file lines
     int linec = 0;
     //'=' vs ' = '
@@ -29,9 +32,12 @@ int main()
     int tcount = 0; // ratiofreq
     // empty lines
     int mspace = 0; // wholefreq
-    //! NULL
+    // !NULL
     int verbose = 0; // ratiofreq
     int nVerbose = 0;
+    // .'\n' 
+    int newLine=0; // ratiofreq
+    int dots=0;
 
     vector<int> names(11, 0); // 10 indexes initialized to 0
     std::cout << '\n';
@@ -77,7 +83,7 @@ int main()
             {
                 nVerbose+=b[0];
             }
-             if (b[1]!=0)
+            if (b[1]!=0)
             {
                 verbose+=b[1];
             }            
@@ -88,6 +94,18 @@ int main()
             {
                 names[a] = names[a] + 1;
             }
+
+            a = dotSpace(line);
+            if (a==1)
+            {
+                newLine++;
+                std::cout << "spaced:" << line << "   "  << linec << " c\n";
+            }
+            if (a>1)
+            {
+                dots+=(a-1);
+                std::cout << "seq:" << line << "   "  << linec << " " << (a-1) << " c\n";
+            }
         }
     }
     std::cout << "imports: " << icount << '\n';
@@ -97,6 +115,7 @@ int main()
     std::cout << "tspace: " << (float)tspace / tcount << '\n';
     std::cout << "nspace: " << (float)mspace / linec << '\n';
     std::cout << "Verbose: " <<(float) verbose / nVerbose << '\n';
+    std::cout << "dotSpace: " <<(float) dots / newLine << '\n';
 
     for (auto i : names)
     {

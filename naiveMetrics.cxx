@@ -9,9 +9,8 @@
 
 using namespace std;
 
-// TODO
-// implement knownNames
-// test functions
+
+
 
 vector<string> knownNames;
 
@@ -266,13 +265,13 @@ int emptyLine(string line)
     return 1;
 }
 
-// things like a==NULL vs !a
 // (a!=NULL) vs (a)
 // (a==NULL) vs (!a)
 // (a==0) vs (!a)
 // (a!=0) vs (a)
 // c doesn't have TRUE FALSE, TRUE= !0, False=0, Null is present
 // does not consiter a statment like: result = a > b ? x : y;
+// tested and working
 vector<int> verboseif(string line)
 {
     vector<int> count={0,0};// [0] for applicable but not verbose, [1] for applicable and verbose
@@ -374,16 +373,42 @@ vector<int> increment(string line)
 }
 
 // \n after .
+// tested and working
 int dotSpace(string line)
 {
+    // 0 for no dot, 1 for dot && spaceing, 2+ for dot no spacing
+    // this is becuase .foo.boo will count as two lines if spaced,
+    //but only one if not
     char tab = char(9);
+    if (line.find("#include")!=string::npos)
+    {// it will pick up header files like "stdio.h"
+            return 0;
+    }
+    
     size_t dotIndex = line.find(".");
     if (dotIndex != string::npos)
     {
+        if (line.find("//")!=string::npos && line.find("//")<dotIndex)
+        {
+            return 0;
+        }
+        if (line.find("/*")!=string::npos && line.find("/*")<dotIndex)
+        {
+            return 0;
+        }
+        //still not safe from middle of multy line comments, I need a comment function
         if (line.at(dotIndex - 1) == ' ' || line.at(dotIndex - 1) == tab)
+        // assume no weird "a.foo" vs "a .foo"
         {
             return 1;
         }
+        int count=1;
+        while (line.find(".")!= string::npos)
+        {
+            count++;
+            line=line.substr(line.find(".")+1);
+        }
+        return count;
     }
     return 0;
 }

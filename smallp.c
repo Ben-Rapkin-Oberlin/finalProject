@@ -9,6 +9,7 @@
 			//otherwise, pretend no vowels found
 
 int leadingVowel(char *word, int count){
+    int a=0;
     int a_a=0;
     int a_A=0;
     int A_A=0;
@@ -24,6 +25,12 @@ int leadingVowel(char *word, int count){
     if (aa==0)
     if (a)
     if (!a)
+
+    a.foo().boo();
+
+    a
+        .foo();
+        .boo();
     //check for capitalization
     //aeiou. 
     //!qu, it's a con
