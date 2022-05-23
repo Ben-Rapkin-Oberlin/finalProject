@@ -94,7 +94,7 @@ int varNames(string line)
         {
             offset = 0;
         }
-        string var = line.substr(offset + 1, Eindex - offset);
+        string var = line.substr(offset, Eindex - offset);
         // at this point, var is of form int a_a, A_A, a-a, aa, AA, Aa
         // so now we trim it to "a_a" and add it to knownNames
         endI = var.length() - 1;
@@ -106,7 +106,7 @@ int varNames(string line)
         startI = endI;
         bool a = true;
         // consider a-a or a_a
-        while (a)
+        while (a && startI!=0)
         {
             if (!isalpha(var.at(startI - 1)))
             {
@@ -338,36 +338,38 @@ vector<int> verboseif(string line)
     return count;
 }
 
-// not done // ++ vs +=1 vs a=a+1
-// substr is (pos,len from pos, including pos) will need to rewrite code
+
+// ++ vs -- vs +=1 vs -=1
+// TODO: a=a+1
+// tested and working
 vector<int> increment(string line)
 {
     //++ -- += -= these corraspond to vector indexes
     vector<int> a = {0, 0, 0, 0};
     // a line can have multiple inc and dec
     string temp = line;
-    while (temp.find("++"))
+    while (temp.find("++")!= string::npos)
     {
         a[0] = a[0] + 1;
-        temp = temp.substr(temp.find("++"), temp.length());
+        temp = temp.substr(temp.find("++")+2);
     }
     temp = line;
-    while (temp.find("--"))
+    while (temp.find("--")!= string::npos)
     {
         a[1] = a[1] + 1;
-        temp = temp.substr(temp.find("--"), temp.length());
+        temp = temp.substr(temp.find("--")+2);
     }
     temp = line;
-    while (temp.find("+="))
+    while (temp.find("+=")!= string::npos)
     {
         a[2] = a[2] + 1;
-        temp = temp.substr(temp.find("+="), temp.length());
+        temp = temp.substr(temp.find("+=")+2);
     }
     temp = line;
-    while (temp.find("-+"))
+    while (temp.find("-=")!= string::npos)
     {
         a[3] = a[3] + 1;
-        temp = temp.substr(temp.find("-="), temp.length());
+        temp = temp.substr(temp.find("-=")+2);
     }
     return a;
 }

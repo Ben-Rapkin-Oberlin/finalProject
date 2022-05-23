@@ -19,7 +19,7 @@ int main()
     // TODO make comment/multy comment tester
 
     // imports
-    int icount = 0; // wholefreq 
+    int icount = 0; // wholefreq
     // file lines
     int linec = 0;
     //'=' vs ' = '
@@ -35,9 +35,14 @@ int main()
     // !NULL
     int verbose = 0; // ratiofreq
     int nVerbose = 0;
-    // .'\n' 
-    int newLine=0; // ratiofreq
-    int dots=0;
+    // .'\n'
+    int newLine = 0; // ratiofreq
+    int dots = 0;
+    // increment
+    int total = 0;
+    int sinc, sdec, cinc, cdec;
+    sinc = sdec = cinc = cdec = 0;
+    bool val = false;
 
     vector<int> names(11, 0); // 10 indexes initialized to 0
     std::cout << '\n';
@@ -53,7 +58,7 @@ int main()
             /////
             icount += imports(line);
 
-            ////
+            ///
             int a = equalSpacing(line);
             if (a)
             {
@@ -77,35 +82,65 @@ int main()
                 mspace++;
             }
 
-            //// 
+            ////
             vector<int> b = verboseif(line);
-            if (b[0]!=0)
+            if (b[0] != 0)
             {
-                nVerbose+=b[0];
+                nVerbose += b[0];
             }
-            if (b[1]!=0)
+            if (b[1] != 0)
             {
-                verbose+=b[1];
-            }            
+                verbose += b[1];
+            }
 
             ////
+            try
+            {
+                            
             a = varNames(line);
             if (a != 0)
             {
                 names[a] = names[a] + 1;
             }
+            }
+             catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+                std::cout << line << "   "  << linec << " c\n";
+            }
 
+            ////
             a = dotSpace(line);
-            if (a==1)
+            if (a == 1)
             {
                 newLine++;
-                std::cout << "spaced:" << line << "   "  << linec << " c\n";
             }
-            if (a>1)
+            if (a > 1)
             {
-                dots+=(a-1);
-                std::cout << "seq:" << line << "   "  << linec << " " << (a-1) << " c\n";
+                dots += (a - 1);
+                //std::cout << "seq:" << line << "   " << linec << " " << (a - 1) << " c\n";
             }
+
+            //
+            b = increment(line);
+            for (auto i : b)
+            {
+                if (i > 0)
+                {
+                    val = true;
+                    break;
+                }
+            }
+            if (val)
+            {
+                sinc += b[0];
+                sdec += b[1];
+                cinc += b[2];
+                cdec += b[3];
+                total = total + b[0] + b[1] + b[2] + b[3];
+            }
+
+            val = false;
         }
     }
     std::cout << "imports: " << icount << '\n';
@@ -114,8 +149,15 @@ int main()
     std::cout << "espace: " << (float)eSpace / ecount << '\n';
     std::cout << "tspace: " << (float)tspace / tcount << '\n';
     std::cout << "nspace: " << (float)mspace / linec << '\n';
-    std::cout << "Verbose: " <<(float) verbose / nVerbose << '\n';
-    std::cout << "dotSpace: " <<(float) dots / newLine << '\n';
+    std::cout << "Verbose: " << (float)verbose / nVerbose << '\n';
+    std::cout << "dotSpace: " << (float)dots / newLine << '\n';
+
+    std::cout << '\n';
+
+    std::cout << "++: " << (float)sinc / total << '\n';
+    std::cout << "--: " << (float)sdec / total << '\n';
+    std::cout << "+=: " << (float)cinc / total << '\n';
+    std::cout << "-=: " << (float)cdec / total << '\n';
 
     for (auto i : names)
     {
