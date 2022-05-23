@@ -40,8 +40,8 @@ int main()
     int dots = 0;
     // increment
     int total = 0;
-    int sinc, sdec, cinc, cdec;
-    sinc = sdec = cinc = cdec = 0;
+    int sinc, sdec, cinc, cdec,vinc,vdec; //simple, complex, verbose
+    sinc = sdec = cinc = cdec = vinc = vdec = 0;
     bool val = false;
 
     vector<int> names(11, 0); // 10 indexes initialized to 0
@@ -137,7 +137,10 @@ int main()
                 sdec += b[1];
                 cinc += b[2];
                 cdec += b[3];
-                total = total + b[0] + b[1] + b[2] + b[3];
+                vinc += b[4];
+                vdec += b[5];
+
+                total = total + b[0] + b[1] + b[2] + b[3] + b[4] + b[5];
             }
 
             val = false;
@@ -158,6 +161,11 @@ int main()
     std::cout << "--: " << (float)sdec / total << '\n';
     std::cout << "+=: " << (float)cinc / total << '\n';
     std::cout << "-=: " << (float)cdec / total << '\n';
+    std::cout << "+=: " << (float)vinc / total << '\n';
+    std::cout << "-=: " << (float)vdec / total << '\n';
+
+    
+
 
     for (auto i : names)
     {

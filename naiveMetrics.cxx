@@ -9,9 +9,6 @@
 
 using namespace std;
 
-
-
-
 vector<string> knownNames;
 
 // Tab vs Spaces
@@ -106,7 +103,7 @@ int varNames(string line)
         startI = endI;
         bool a = true;
         // consider a-a or a_a
-        while (a && startI!=0)
+        while (a && startI != 0)
         {
             if (!isalpha(var.at(startI - 1)))
             {
@@ -274,11 +271,11 @@ int emptyLine(string line)
 // tested and working
 vector<int> verboseif(string line)
 {
-    vector<int> count={0,0};// [0] for applicable but not verbose, [1] for applicable and verbose
+    vector<int> count = {0, 0}; // [0] for applicable but not verbose, [1] for applicable and verbose
     if (line.find("if") != string::npos)
     {
-        if  (line.find("if")>line.find("/") && line.find("/")!= string::npos) // check to make sure not reading a comment
-        {// i have both becuase I'm not sure how int compares to string::npos
+        if (line.find("if") > line.find("/") && line.find("/") != string::npos) // check to make sure not reading a comment
+        {                                                                       // i have both becuase I'm not sure how int compares to string::npos
             return count;
         }
         // c doesn't have 'or' 'and'
@@ -287,7 +284,7 @@ vector<int> verboseif(string line)
         list.push_back(line);
         // split if statment into args, first &&
         // "if (a || b && c || d)"" -> "if (a || b ", " c||d)"
-        for (int i = 0; i < (int) list.size(); i++)
+        for (int i = 0; i < (int)list.size(); i++)
         {
             string temp = list[i];
             if (line.find("&") != string::npos)
@@ -299,14 +296,13 @@ vector<int> verboseif(string line)
         }
         // now further split by ||
         //"if (a || b ", " c||d)" -> "if (a ", " b ", " c", " d)"
-        for (int i = 0; i < (int) list.size(); i++)
+        for (int i = 0; i < (int)list.size(); i++)
         {
             string temp = list[i];
             if (temp.find("|") != string::npos)
             {
                 list[i] = temp.substr(0, temp.find("|"));
                 list.push_back(temp.substr(temp.find("|") + 2));
-                
             }
         }
         // now check each arg
@@ -314,7 +310,7 @@ vector<int> verboseif(string line)
         {
             // not currently considering a==1, maybe be being used in a none boolean sense
 
-            if (i.find("<")!= string::npos || i.find(">")!= string::npos)
+            if (i.find("<") != string::npos || i.find(">") != string::npos)
             {
                 continue; // just here to stop it from checking every other statment
             }
@@ -329,7 +325,7 @@ vector<int> verboseif(string line)
                 count[1] = count[1] + 1; // verbose
             }
             // current possible args: (a), (!a) and we will assume it is one of these
-            else if (i.find("==")==string::npos)
+            else if (i.find("==") == string::npos)
             {
                 count[0] = count[0] + 1;
             }
@@ -338,38 +334,61 @@ vector<int> verboseif(string line)
     return count;
 }
 
-
 // ++ vs -- vs +=1 vs -=1
 // TODO: a=a+1
 // tested and working
 vector<int> increment(string line)
 {
     //++ -- += -= these corraspond to vector indexes
-    vector<int> a = {0, 0, 0, 0};
+    // could combine into '--' + '++' vs '+=' + '-+' to show
+    // stylistic inc dec instead. Will have to think on it
+    vector<int> a = {0, 0, 0, 0, 0, 0};
     // a line can have multiple inc and dec
     string temp = line;
-    while (temp.find("++")!= string::npos)
+    while (temp.find("++") != string::npos)
     {
         a[0] = a[0] + 1;
-        temp = temp.substr(temp.find("++")+2);
+        temp = temp.substr(temp.find("++") + 2);
     }
     temp = line;
-    while (temp.find("--")!= string::npos)
+    while (temp.find("--") != string::npos)
     {
         a[1] = a[1] + 1;
-        temp = temp.substr(temp.find("--")+2);
+        temp = temp.substr(temp.find("--") + 2);
     }
     temp = line;
-    while (temp.find("+=")!= string::npos)
+    while (temp.find("+=") != string::npos)
     {
         a[2] = a[2] + 1;
-        temp = temp.substr(temp.find("+=")+2);
+        temp = temp.substr(temp.find("+=") + 2);
     }
     temp = line;
-    while (temp.find("-=")!= string::npos)
+    while (temp.find("-=") != string::npos)
     {
         a[3] = a[3] + 1;
-        temp = temp.substr(temp.find("-=")+2);
+        temp = temp.substr(temp.find("-=") + 2);
+    }
+    if (a[0] != 0 && a[1] != 0 && a[2] != 0 && a[3] != 0)
+    {
+        // assume no one is evil and typing a=a++;
+        // this is probaly faster than a for loop right?
+        string temp = line;
+        temp.erase(std::remove_if(temp.begin(), temp.end(), ::isspace), temp.end());
+        // from ' a = a+ 1 ' to 'a=a+1'
+        // assume only one of these can happen per line
+        for (auto i : knownNames)
+        {
+            if (temp.find(i + "=" + i + "1"))
+            {
+                a[4] = a[4] + 1;
+                break;
+            }
+            else if (temp.find(i + "=" + i + "1"))
+            {
+                a[5] = a[5] + 1;
+                break;
+            }
+        }
     }
     return a;
 }
@@ -380,35 +399,35 @@ int dotSpace(string line)
 {
     // 0 for no dot, 1 for dot && spaceing, 2+ for dot no spacing
     // this is becuase .foo.boo will count as two lines if spaced,
-    //but only one if not
+    // but only one if not
     char tab = char(9);
-    if (line.find("#include")!=string::npos)
-    {// it will pick up header files like "stdio.h"
-            return 0;
+    if (line.find("#include") != string::npos)
+    { // it will pick up header files like "stdio.h"
+        return 0;
     }
-    
+
     size_t dotIndex = line.find(".");
     if (dotIndex != string::npos)
     {
-        if (line.find("//")!=string::npos && line.find("//")<dotIndex)
+        if (line.find("//") != string::npos && line.find("//") < dotIndex)
         {
             return 0;
         }
-        if (line.find("/*")!=string::npos && line.find("/*")<dotIndex)
+        if (line.find("/*") != string::npos && line.find("/*") < dotIndex)
         {
             return 0;
         }
-        //still not safe from middle of multy line comments, I need a comment function
+        // still not safe from middle of multy line comments, I need a comment function
         if (line.at(dotIndex - 1) == ' ' || line.at(dotIndex - 1) == tab)
         // assume no weird "a.foo" vs "a .foo"
         {
             return 1;
         }
-        int count=1;
-        while (line.find(".")!= string::npos)
+        int count = 1;
+        while (line.find(".") != string::npos)
         {
             count++;
-            line=line.substr(line.find(".")+1);
+            line = line.substr(line.find(".") + 1);
         }
         return count;
     }
