@@ -1,11 +1,11 @@
 #include <vector>
 #include <filesystem>
-#include <iostream>
 #include <string>
 #include <any>
 #include <random>
 #include <array>
 #include <cmath>
+#include "train.cxx"
 
 using namespace std;
 //add clean() for memory allocated, use vector destuctor
