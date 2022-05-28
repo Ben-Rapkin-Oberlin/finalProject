@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <cctype>
+#include <array>
 
 #include <iostream>
 #include <fstream>
@@ -9,11 +10,14 @@
 
 using namespace std;
 
-int main()
+// extern int vector<string> knownNames;
+
+array<float, 10> train(string a)
 {
-    string fname = "C:\\Users\\benra\\Documents\\Academics\\Spring 22\\Systems (241)\\finalProject\\smallp.c";
+    array<float, 10> info = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    // string fname = "C:\\Users\\benra\\Documents\\Academics\\Spring 22\\Systems (241)\\finalProject\\smallp.c"
     fstream newfile;
-    newfile.open(fname, ios::in);
+    newfile.open(a, ios::in);
 
     // TODO make imports abs count
     // TODO make comment/multy comment tester
@@ -26,7 +30,7 @@ int main()
     int eSpace = 0;
     int ecount = 0; // ratiofreq
     // mainsize
-    float r = mainsize(fname); // wholefreq
+    float r = mainsize(a); // wholefreq
     // tab vs spaces
     int tspace = 0;
     int tcount = 0; // ratiofreq
@@ -40,7 +44,7 @@ int main()
     int dots = 0;
     // increment
     int total = 0;
-    int sinc, sdec, cinc, cdec,vinc,vdec; //simple, complex, verbose
+    int sinc, sdec, cinc, cdec, vinc, vdec; // simple, complex, verbose
     sinc = sdec = cinc = cdec = vinc = vdec = 0;
     bool val = false;
 
@@ -96,17 +100,17 @@ int main()
             ////
             try
             {
-                            
-            a = varNames(line);
-            if (a != 0)
-            {
-                names[a] = names[a] + 1;
+
+                a = varNames(line);
+                if (a != 0)
+                {
+                    names[a] = names[a] + 1;
+                }
             }
-            }
-             catch(const std::exception& e)
+            catch (const std::exception &e)
             {
                 std::cerr << e.what() << '\n';
-                std::cout << line << "   "  << linec << " c\n";
+                std::cout << line << "   " << linec << " c\n";
             }
 
             ////
@@ -118,7 +122,7 @@ int main()
             if (a > 1)
             {
                 dots += (a - 1);
-                //std::cout << "seq:" << line << "   " << linec << " " << (a - 1) << " c\n";
+                // std::cout << "seq:" << line << "   " << linec << " " << (a - 1) << " c\n";
             }
 
             //
@@ -146,6 +150,7 @@ int main()
             val = false;
         }
     }
+    /*
     std::cout << "imports: " << icount << '\n';
     std::cout << "Main Ratio: " << r << '\n';
 
@@ -164,7 +169,7 @@ int main()
     std::cout << "a=a+1: " << (float)vinc / total << '\n';
     std::cout << "a=a-1: " << (float)vdec / total << '\n';
 
-    
+
 
 
     for (auto i : names)
@@ -177,6 +182,19 @@ int main()
     {
         std::cout << i << ", ";
     }
+    */
+    info[0] = (float)icount;
+    info[1] = (float)(eSpace / ecount);
+    info[2] = (float)(tspace / tcount);
+    info[3] = (float)(mspace / linec);
+    info[4] = (float)(verbose / nVerbose);
+    info[5] = (float)(dots / newLine);
+    info[6] = (float)((sinc + sdec) / total);
+    info[7] = (float)((cinc + cdec) / total);
+    info[8] = (float)((vinc + vdec) / total);
+    info[9] = r;
+
+    return info;
 
     // call each method
     // add those to runing total
