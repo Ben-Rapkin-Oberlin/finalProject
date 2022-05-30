@@ -1,3 +1,5 @@
+//Coded by Hikari
+
 #include <vector>
 #include <filesystem>
 #include <string>
@@ -7,10 +9,15 @@
 #include <cmath>
 
 
+
+
 using namespace std;
 
 array<float, 10> train(string a); //prototype
 
+
+//bootstraps randomly sampling the vector data set to create bCount samples, returns array with statistics about data
+//return array is structured SD 0, Mean 0, SD 1, Mean 1, etc. 
 std::array<float, 20>bootstrap(std::vector<std::array<float, 10> > data, int bCount) {
 	
 	//device generates random seed for number generator
@@ -131,6 +138,11 @@ std::array<float, 20>bootstrap(std::vector<std::array<float, 10> > data, int bCo
 
 	return fData;
 }
+
+//takes path for data directory to analyize and number of samples to bootstrap as input
+//outputs pair of vectors, first is a list of names, and second is a list of data statistics
+//index of data statistics for a person corresponds to the index of that person's name in the name list
+//data statistics are structed as an vector of float arrays, which each float array being structed as follows: SD 0, Mean 0, SD 1, Mean 1, ... SD 9, Mean 9
 
 std::pair< std::vector<string>, std::vector<std::array<float, 20> > > dataAnalysis(string path, int bootCount) {
 	std::vector<std::array<float, 20> > pData;
