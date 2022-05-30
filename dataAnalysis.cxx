@@ -5,13 +5,13 @@
 #include <random>
 #include <array>
 #include <cmath>
-#include "train.cxx"
+
 
 using namespace std;
 
+array<float, 10> train(string a); //prototype
 
-
-std::array<float, 20>bootstrap(vector<std::array<float, 10> > data, int bCount) {
+std::array<float, 20>bootstrap(std::vector<std::array<float, 10> > data, int bCount) {
 	
 	//device generates random seed for number generator
 	std::random_device rd;
@@ -24,22 +24,69 @@ std::array<float, 20>bootstrap(vector<std::array<float, 10> > data, int bCount) 
 
 	std::vector<float * > bData; //create temp vector for bootstrap data, stores pointers to float arrays
 
+	float gen0, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, gen9; //temporarily stores float values for filling bootstrap samples
+
+
 	//creates new data samples equal to bCount, stores in bData
 	for (int i = 0; i < bCount; ++i) {
+		
 
-		//creates new dynamically allocated array stored in vector at index i
+		//fills array datapoints with randomly selected nonzero datapoint (train returns zero if it fails to find that piece of data)
+		gen0 = data.at(dist(gen))[0];
+		while (gen0 == 0) {
+			gen0 = data.at(dist(gen))[0];
+		}
+		gen0 = data.at(dist(gen))[0];
+		while (gen1 == 0) {
+			gen1 = data.at(dist(gen))[1];
+		}
+		gen2 = data.at(dist(gen))[2];
+		while (gen2 == 0) {
+			gen2 = data.at(dist(gen))[2];
+		}
+		gen2 = data.at(dist(gen))[3];
+		while (gen3 == 0) {
+			gen0 = data.at(dist(gen))[3];
+		}
+		gen4 = data.at(dist(gen))[4];
+		while (gen4 == 0) {
+			gen4 = data.at(dist(gen))[4];
+		}
+		gen5 = data.at(dist(gen))[5];
+		while (gen5 == 0) {
+			gen5 = data.at(dist(gen))[5];
+		}
+		gen6 = data.at(dist(gen))[6];
+		while (gen6 == 0) {
+			gen6 = data.at(dist(gen))[6];
+		}
+		gen7 = data.at(dist(gen))[7];
+		while (gen7 == 0) {
+			gen7 = data.at(dist(gen))[7];
+		}
+		gen8 = data.at(dist(gen))[8];
+		while (gen8 == 0) {
+			gen8 = data.at(dist(gen))[8];
+		}
+		gen9 = data.at(dist(gen))[9];
+		while (gen9 == 0) {
+			gen9 = data.at(dist(gen))[9];
+		}
+
+
+		//creates new dynamically allocated array stored in vector at index
 		bData.push_back(new float[10]{
 			//populates array by sampling with replacement from data set. This means that the array is a randomly generated new data piece that can be used for statistical analysis.
-			data.at(dist(gen))[0],
-			data.at(dist(gen))[1],
-			data.at(dist(gen))[2],
-			data.at(dist(gen))[3],
-			data.at(dist(gen))[4],
-			data.at(dist(gen))[5],
-			data.at(dist(gen))[6],
-			data.at(dist(gen))[7],
-			data.at(dist(gen))[8],
-			data.at(dist(gen))[9],
+			gen0,
+			gen1,
+			gen2,
+			gen3,
+			gen4,
+			gen5,
+			gen6,
+			gen7,
+			gen8,
+			gen9
 			});
 	}
 
@@ -49,12 +96,15 @@ std::array<float, 20>bootstrap(vector<std::array<float, 10> > data, int bCount) 
 	//stores standard devation and mean for function return
 	std::array<float, 20> fData;
 
-	for (int i = 0; i < 10; ++i) {
+
+	int i, x; //variables for loops
+
+	for (i = 0; i < 10; ++i) {
 
 		tempSum = 0;
 
 		//loops through each sample to add for mean
-		for (int x = 0; x < bCount; ++x) {
+		for (x = 0; x < bCount; ++x) {
 			tempSum += bData.at(x)[i];
 		}
 		
@@ -66,7 +116,7 @@ std::array<float, 20>bootstrap(vector<std::array<float, 10> > data, int bCount) 
 		tempSum = 0;
 
 		//loops through each sample to add for SD according to formula for standard deviation
-		for (int x = 0; x < bCount; ++x) {
+		for (x = 0; x < bCount; ++x) {
 			tempSum = tempSum + std::pow(std::abs(bData.at(x)[i]/*value*/ - fData[(i + 1) * 2] /*mean*/), 2);
 		}
 		//finishes calulating SD and places it in correct position in fData
@@ -74,7 +124,7 @@ std::array<float, 20>bootstrap(vector<std::array<float, 10> > data, int bCount) 
 	}
 
 	//cleans up
-	for (int x = 0; x < bCount; ++x) {
+	for (x = 0; x < bCount; ++x) {
 		delete[] bData.at(x);
 	}
 	bData.~vector();
