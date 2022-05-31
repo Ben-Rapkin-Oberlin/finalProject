@@ -1,5 +1,5 @@
-This is the scaning protocal for our plagerism dectector. It scans a provided code file
-(pig.c and smallp.c are included test material) for a number of statistical markers before 
-sending that information off for other processes to interperate
+This is the repository for our plagerism dectector. It scans a provided code file
+for a number of statistical markers before sending that information off for other 
+processes to interperate. It has a makefile and main is located in final.cxx
 
 We have adhered to the honor code on this project.
