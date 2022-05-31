@@ -1,8 +1,14 @@
 //Coded by Hikari
 
 
+//aproximate time spent: >28 hours
+
 //known bug where program will run forever if none of the training data set for a person has a value for one of the data points
 //this is a fringe case and should never happen under normal operation, any data set we plan to use the program with should have at least 1 value for each data point
+
+//known bug where program crashes upon bootstrap returning the array to dataAnalysis/when the return value is used.
+//Originally thought that this was due to being unable to return a std::array created in the scope of bootstrap, so I rewrote bootstrap to take and return a pointer to a float array instead.
+//unfortunately this did not work, and googling didn't show anyone else with the same problem
 
 #include <vector>
 #include <filesystem>
@@ -20,9 +26,9 @@ using namespace std;
 array<float, 10> train(string a); //prototype
 
 
-//bootstraps randomly sampling the vector data set to create bCount samples, returns array with statistics about data
+//bootstraps randomly sampling the vector data set to create bCount samples, returns array pointer given in input with updated info
 //return array is structured SD 0, Mean 0, SD 1, Mean 1, etc. 
-std::array<float, 20>bootstrap(std::vector<std::array<float, 10> > data, int bCount) {
+float* bootstrap(std::vector<std::array<float, 10> > data, int bCount, float * fData) {
 	
 	//device generates random seed for number generator
 	std::random_device rd;
@@ -101,8 +107,6 @@ std::array<float, 20>bootstrap(std::vector<std::array<float, 10> > data, int bCo
 	//temp variable for adding all values to find mean and adding values to find standard deviation
 	float tempSum;
 
-	//stores standard devation and mean for function return
-	std::array<float, 20> fData;
 
 
 	int i, x; //variables for loops
@@ -140,10 +144,11 @@ std::array<float, 20>bootstrap(std::vector<std::array<float, 10> > data, int bCo
 //takes path for data directory to analyize and number of samples to bootstrap as input
 //outputs pair of vectors, first is a list of names, and second is a list of data statistics
 //index of data statistics for a person corresponds to the index of that person's name in the name list
-//data statistics are structed as an vector of float arrays, which each float array being structed as follows: SD 0, Mean 0, SD 1, Mean 1, ... SD 9, Mean 9
+//data statistics are structed as an vector of float array pointers, which each float array being structed as follows: SD 0, Mean 0, SD 1, Mean 1, ... SD 9, Mean 9
+//note that the arrays are not null terminated, but are all size 20
 
-std::pair< std::vector<string>, std::vector<std::array<float, 20> > > dataAnalysis(string path, int bootCount) {
-	std::vector<std::array<float, 20> > pData;
+std::pair< std::vector<string>, std::vector<float * > > dataAnalysis(string path, int bootCount) {
+	std::vector<float *> pData;
 	std::vector<string> pNames; //index of name list correlates to index in pData with that person's data
 
 
@@ -160,17 +165,17 @@ std::pair< std::vector<string>, std::vector<std::array<float, 20> > > dataAnalys
 		//loops through a person's code directory
 		for (const auto& file : std::filesystem::directory_iterator(person.path())) {
 			tempData.push_back(train(file.path().string()));
-			//tempData.push_back(std::array<float, 10> {1, 1, 2, 3, 4, 5, 6, 7, 8, 9}); placeholder values for testing without calling train
+			//tempData.push_back(std::array<float, 10> {1, 1, 2, 3, 4, 5, 6, 7, 8, 9}); //placeholder values for testing without calling train
 		}
 
-		pData.push_back(bootstrap(tempData, bootCount));
+		pData.push_back(bootstrap(tempData, bootCount, new float[20]));
 
 		//cleans up
 		tempData.~vector();
 	}
 
 	//array for return
-	std::pair< std::vector<string>, std::vector<std::array<float, 20> > > fPair;
+	std::pair< std::vector<string>, std::vector<float * > > fPair;
 	fPair.first = pNames;
 	fPair.second = pData;
 
