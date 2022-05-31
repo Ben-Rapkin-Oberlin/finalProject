@@ -33,17 +33,15 @@ std::array<float, 20>bootstrap(std::vector<std::array<float, 10> > data, int bCo
 
 	float gen0, gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, gen9; //temporarily stores float values for filling bootstrap samples
 
-
 	//creates new data samples equal to bCount, stores in bData
 	for (int i = 0; i < bCount; ++i) {
-		
 
 		//fills array datapoints with randomly selected nonzero datapoint (train returns zero if it fails to find that piece of data)
 		gen0 = data.at(dist(gen))[0];
 		while (gen0 == 0) {
 			gen0 = data.at(dist(gen))[0];
 		}
-		gen0 = data.at(dist(gen))[0];
+		gen1 = data.at(dist(gen))[1];
 		while (gen1 == 0) {
 			gen1 = data.at(dist(gen))[1];
 		}
@@ -51,7 +49,7 @@ std::array<float, 20>bootstrap(std::vector<std::array<float, 10> > data, int bCo
 		while (gen2 == 0) {
 			gen2 = data.at(dist(gen))[2];
 		}
-		gen2 = data.at(dist(gen))[3];
+		gen3 = data.at(dist(gen))[3];
 		while (gen3 == 0) {
 			gen0 = data.at(dist(gen))[3];
 		}
@@ -79,7 +77,6 @@ std::array<float, 20>bootstrap(std::vector<std::array<float, 10> > data, int bCo
 		while (gen9 == 0) {
 			gen9 = data.at(dist(gen))[9];
 		}
-
 
 		//creates new dynamically allocated array stored in vector at index
 		bData.push_back(new float[10]{
@@ -114,17 +111,15 @@ std::array<float, 20>bootstrap(std::vector<std::array<float, 10> > data, int bCo
 		for (x = 0; x < bCount; ++x) {
 			tempSum += bData.at(x)[i];
 		}
-		
 		tempSum = tempSum / bCount;
-
 		//inserts mean at correct position in fData
-		fData[(i + 1) * 2] = tempSum;
+		fData[(i * 2) +1] = tempSum;
 
 		tempSum = 0;
 
 		//loops through each sample to add for SD according to formula for standard deviation
 		for (x = 0; x < bCount; ++x) {
-			tempSum = tempSum + std::pow(std::abs(bData.at(x)[i]/*value*/ - fData[(i + 1) * 2] /*mean*/), 2);
+			tempSum = tempSum + std::pow(std::abs(bData.at(x)[i]/*value*/ - fData[(i * 2) +1 ] /*mean*/), 2);
 		}
 		//finishes calulating SD and places it in correct position in fData
 		fData[i*2] = std::sqrt(tempSum / bCount);
@@ -135,7 +130,6 @@ std::array<float, 20>bootstrap(std::vector<std::array<float, 10> > data, int bCo
 		delete[] bData.at(x);
 	}
 	bData.~vector();
-
 	return fData;
 }
 
@@ -162,11 +156,10 @@ std::pair< std::vector<string>, std::vector<std::array<float, 20> > > dataAnalys
 		//loops through a person's code directory
 		for (const auto& file : std::filesystem::directory_iterator(person.path())) {
 			tempData.push_back(train(file.path().string()));
+			//tempData.push_back(std::array<float, 10> {1, 1, 2, 3, 4, 5, 6, 7, 8, 9}); placeholder values for testing without calling train
 		}
 
-
 		pData.push_back(bootstrap(tempData, bootCount));
-
 
 		//cleans up
 		tempData.~vector();
