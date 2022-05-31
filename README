@@ -1,5 +1,12 @@
-This is the repository for our plagerism dectector. It scans a provided code file
-for a number of statistical markers before sending that information off for other 
-processes to interperate. It has a makefile and main is located in final.cxx
+This is the repository for our plagerism dectector. 
+
+train.cxx scans a single c file for a number of markers, which it returns as an array of floats
+
+dataAnalysis.cxx bootstraps our samples
+
+final.cxx reads in a new file to compute if it is likely plagerized. This should be the only file that
+the user must manuelly call
+
+There is a makefile and main is located in final.cxx
 
 We have adhered to the honor code on this project.
