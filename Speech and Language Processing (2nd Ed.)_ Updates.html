@@ -1,0 +1,556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+
+
+	
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta name="generator" content="Adobe GoLive"><title>Speech and Language Processing (2nd Ed.): Updates</title>
+		
+		<link href="slp.html" rel="stylesheet" type="text/css" media="all"></head>
+
+<style type="text/css">
+<!--
+body,td,th {
+        font-family: "Lucida San Unicode", "Trebuchet MS", "Bitstream Vera Sans", Verdana, Helvetica, sans-serif;
+        font-size: 16px;
+}
+.title {
+        font-style: italic;
+        font-weight: bold;
+        text-align: right;
+        letter-spacing: 0.2em;
+        text-transform: lowercase;
+}
+a:link {
+        text-decoration: underline;
+}
+a:visited {
+        text-decoration: underline;
+        color: #993333;
+}
+a:hover {
+        text-decoration: underline;
+}
+a:active {
+        text-decoration: none;
+}
+body td {
+}
+
+-->
+</style>
+
+<body>
+			<table border="0" cellpadding="2" cellspacing="0" width="100%">
+				<tbody><tr>
+					<td align="left" valign="bottom" width="335">
+					<div align="left">
+						<img src="SLP2/slp2-cover.jpg" alt="" border="0" height="250" width="250"></div>
+				</td>
+					<td align="left" valign="top">
+					<h1>SPEECH and LANGUAGE PROCESSING</h1>
+					<h2>An Introduction to Natural Language Processing, <br>
+						Computational Linguistics, and Speech Recognition<br>
+						
+						Second Edition</h2>
+					  <h3>by <a href="http://www.stanford.edu/~jurafsky"> Daniel Jurafsky</a> and <a href="http://www.cs.colorado.edu/~martin"> James H. Martin</a> </h3>
+					<h6>Last Update<br>
+						<csobj format="LongDate" h="13" locale="00000409" region="0" t="DateTime" w="148"> January 6, 2009</csobj></h6>
+				</td>
+				</tr>
+			<tr height="25">
+				<td align="left" height="25" valign="top" width="335"></td>
+				<td align="left" height="25" valign="bottom"></td>
+			</tr>
+			<tr height="25">
+					<td align="left" height="25" valign="top" width="335"><a id="top" name="top"></a><em><font size="-1">	  </font></em></td>
+
+
+			  
+			  <td align="left" height="25" valign="bottom"><font size="-1"><em>
+The 2nd edition is now avaiable. A million thanks to everyone who sent us
+corrections and suggestions for all the  draft chapters.
+You can find the book
+			    <a href="http://www.amazon.com/Speech-Language-Processing-Daniel-Jurafsky/dp/0131873210/"> at Amazon. </a>
+<p>
+Chapter 1 is available below for your reading pleasure.
+
+<p>
+Figures, slides and an instructor's manual are available from Prentice Hall at
+			    their <a href="http://www.pearsonhighered.com/educator/hip_main_content/1,3120,-500,00.html">
+			    Instructor's Resource Site</a> (registration required).
+<p>
+
+			    <a href="http://www.cs.colorado.edu/~martin/SLP/errata-version.html">
+			    An errata page<a> for this edition is available. 
+			    <p>
+Material from the
+<a href="http://www.cs.colorado.edu/~martin/slp1.html"> 1st edition </a> is still available.
+			    
+	 				  </em></font></td>
+				</tr>
+				<tr>
+				<td valign="top" width="375">
+						<div align="left">
+						<table border="0" cellpadding="0" cellspacing="0" width="373">
+							<tbody><tr>
+								<td colspan="3">
+									<h3>Table of Contents</h3>
+								</td>
+							</tr>
+						</tbody></table>
+						<table border="0" cellpadding="0" cellspacing="0" width="374">
+							<tbody><tr>
+								<td colspan="3">
+									<h4><b>Preface</b></h4>
+								</td>
+							</tr>
+							<tr>
+								<td width="20"><a id="" title="Speech and Language Processing (2nd Ed.) Chapter 1 PDF" href="http://www.cs.colorado.edu/%7Emartin/SLP/Updates/1.pdf" csover="4bf5946"><img src="SLP2/pdficon_small.gif" alt="Chapter 1 PDF" align="top" border="0" height="17" width="16"></a></td>
+								<td width="23">1</td>
+								<td><a href="#Chapter1"> Introduction </a> <br>
+							</td></tr>
+							<tr>
+								<td colspan="3">
+									<h3><b>I: Words</b></h3>
+								</td>
+							</tr>
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">2</td>
+								<td><a href="#Chapter2"> Regular Expressions and Automata</a> <br>
+								</td>
+							</tr>
+							<tr>
+								<td width="20">
+								
+								</td>
+								<td width="23">3</td>
+								<td><a href="#Chapter3">Words and Transducers</a><br>
+								</td>
+							</tr>
+							<tr>
+
+								<td width="20">
+
+								</td>
+								<td width="23">4</td>
+								<td><a href="#Chapter4">N-grams</a></td>
+							</tr>
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">5</td>
+								<td><a href="#Chapter5">Part-of-Speech Tagging</a></td>
+							</tr>
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">6</td>
+								<td><a href="#Chapter6">Hidden Markov and Maximum Entropy Models</a></td>
+							</tr>
+							<tr>
+								<td colspan="3">
+									<h3><b>II: Speech</b></h3>
+								</td>
+							</tr>
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">7</td>
+								<td><a href="#Chapter7">Phonetics</a> </td>
+							</tr>
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">8</td>
+								<td><a href="#Chapter8">Speech Synthesis</a></td>
+							</tr>
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">9</td>
+								<td><a href="#Chapter9">Automatic Speech Recognition</a></td>
+							</tr>
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">10</td>
+								<td><a href="#Chapter10">Speech Recognition: Advanced Topics</a></td>
+							</tr>
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">11</td>
+								<td><a href="#Chapter11">Computational Phonology</a></td>
+							</tr>
+							<tr>
+								<td colspan="3">
+									<h3><b>III: Syntax</b></h3>
+								</td>
+							</tr>
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">12</td>
+								<td><a href="#Chapter12">Formal Grammars of English </a></td>
+							</tr>
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">13</td>
+								<td><a href="#Chapter13">Syntactic Parsing </a></td>
+							</tr>
+
+
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">14</td>
+								<td><a href="#Chapter14">Statistical Parsing</a></td>
+							</tr>
+
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">15</td>
+								<td><a href="#Chapter15">Features and Unification</a></td>
+							</tr>							
+
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">16</td>
+								<td><a href="#Chapter16">Language and Complexity </a></td>
+							</tr>
+
+							<tr>
+								<td colspan="3">
+									<h3><b>IV: Semantics and Pragmatics</b></h3>
+								</td>
+							</tr>
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">17</td>
+								<td><a href="#Chapter17">The Representation of Meaning</a></td>
+							</tr>
+
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">18</td>
+								<td><a href="#Chapter18">Computational Semantics</a></td>
+							</tr>
+
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">19</td>
+								<td><a href="#Chapter19">Lexical Semantics</a></td>
+								 
+							</tr>
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">20</td>
+								<td><a href="#Chapter20">Computational Lexical Semantics</a></td>
+							</tr>
+														<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">21</td>
+								<td><a href="#Chapter21">Computational Discourse</a></td>
+							</tr>
+							
+							<tr>
+								<td colspan="3">
+									<h3><b>V: Applications</b></h3>
+								</td>
+							</tr>
+
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">22</td>
+								<td><a href="#Chapter22"> Information Extraction </a></td>
+							</tr>
+
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">23</td>
+								<td><a href="#Chapter23"> Question Answering and Summarization </a></td>
+							</tr>
+							<tr>
+							
+							<tr>
+							  <td width="20">
+
+							  </td>
+							  <td width="23">24</td>
+							  <td><a href="#Chapter24">Dialog and Conversational Agents</a></td>
+							</tr>
+
+							<tr>
+								<td width="20">
+
+								</td>
+								<td width="23">25</td>
+								<td><a href="#Chapter25">Machine Translation</a></td>
+							</tr>
+							<tr>
+								<td width="20"></td>
+								<td width="23"></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td width="20"></td>
+								<td width="23"></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td width="20"></td>
+								<td width="23"></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td width="20"></td>
+								<td width="23"></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td width="20"></td>
+								<td width="23"></td>
+								<td></td>
+							</tr>
+						</tbody></table>
+					</div>
+					</td>
+				<td rowspan="2" valign="top">
+
+  				  <h3><a id="Chapter1" name="chapter1"></a>Chapter 1: Introduction </h3>
+					<p>This chapter is largely the same with updated history and pointers to newer applications.  <a id="" title="Chapter 1 PDF" name="" href="http://www.cs.colorado.edu/%7Emartin/SLP/Updates/1.pdf"><img src="SLP2/pdficon_small.gif" alt="PDF for Chapter 1" align="top" border="0" height="17" width="17"></a>  <font size="-2"><a href="#top">(top)</a></font></p>
+
+				  <h3><a id="Chapter2" name="chapter2"></a>Chapter 2: Regular Expressions and Automata </h3>
+					<p>This chapter is largely the same with some bug fixes.    <font size="-2"><a href="#top">(top)</a></font></p>
+
+				  <h3><a id="Chapter3" name="chapter3"></a>Chapter 3: Words and Transducers </h3>
+					<p>This
+new version of the chapter still focuses on morphology and FSTs, but is
+expanded in various ways. There are more details about the formal
+descriptions of finite-state transducers, many bugs are fixed, and two
+new sections are added relating to words and subwords. The first new
+section is on word and sentence tokenization, including algorithms for
+English as well as the maxmatch algorithm for Chinese word
+segmentation. The second new section is on spelling correction and
+minimum edit distance, and is an extended version of the edit-distance
+section from Chapter 5 of the first edition, with clearer figures for
+example for explaining the minimum-edit-distance backtrace.   <font size="-2"><a href="#top">(top)</a></font></p>
+					<h3><a id="Chapter4" name="Chapter4"></a>Chapter 4: N-grams (Formerly Chapter 6) </h3>
+					<p>This
+updated language model chapter has had a complete overhaul. This draft
+includes more examples, a more complete description of Good-Turing,
+expanded sections on practical issues like perplexity and evaluation,
+language modeling toolkits, including ARPA format, and an overview of
+modern methods like interpolated Kneser-Ney.   <font size="-2"><a href="#top">(top)</a></font></p>
+
+				  <h3><a id="Chapter5" name="Chapter5"></a>Chapter 5: Part-of-Speech Tagging (Formerly Chapter 8)</h3>
+					<p>
+The main change to this revised chapter is a greatly expanded, and
+hence self-contained, description of bigram and trigram HMM
+part-of-speech tagging, including Viterbi decoding and deleted
+interpolation smoothing. Together with the new Chapter 6, this allows
+a complete introduction to HMMs for courses that don't use the speech
+recognition chapters. Other changes in this chapter include expanded
+descriptions of unknown word modeling and part-of-speech tagging in
+other languages, and many bug fixes. Finally, we've moved this chapter
+earlier in the book.
+  <font size="-2"><a href="#top">(top)</a></font></p>
+
+
+
+<h3><a id="Chapter6" name="Chapter6"></a>Chapter 6: Hidden Markov and Maximum Entropy Models (Formerly part of Chapter 7 and Appendix D)</h3>
+<p>
+This new chapter introduces two sequence models: HMMs and MEMMs.
+It gives the details of  Hidden Markov Models,
+including Forward, Viterbi, and EM. It then introduces MaxEnt models,
+begining with linear regression, followed by logistic regression, then the extension
+to MaxEnt, and finally the MEMM and the Viterbi intuition.
+ <font size="-2"><a href="#top">(top)</a></font>
+</p>
+
+
+<h3><a id="Chapter7" name="Chapter7"></a>Chapter 7: Phonetics (Formerly parts of Chapters 4, 5, and 7)</h3>
+					<p>This
+chapter is an introduction to articulatory and acoustic phonetics for
+speech processing, as well as foundational tools like the ARPAbet,
+wavefile formats, phonetic dictionaries, and PRAAT.  <font size="-2"><a href="#top">(top)</a></font></p>
+
+
+<h3><a id="Chapter8" name="Chapter8"></a>Chapter 8: Speech Synthesis</h3>
+					<p>This is a new chapter on speech synthesis.   <font size="-2"><a href="#top">(top)</a></font></p>
+
+
+<h3><a id="Chapter9" name="Chapter9"></a>Chapter 9: Automatic Speech Recognition (Formerly 7)</h3>
+					<p>This
+new significantly-expanded speech recognition chapter gives a complete
+introduction to HMM-based speech recognition, including extraction of MFCC
+features, Gaussian Mixture Model acoustic models, and embedded training.  <font size="-2"><a href="#top">(top)</a></font></p>
+
+<h3><a id="Chapter10" name="Chapter10"></a>Chapter 10: Speech Recognition: Advanced Topics (New Chapter) </h3>
+				<p>This new second chapter on speech
+recognition covers advanced topics like decision-tree clustering for context-dependent
+phones, advanced decoding (including n-best lists, lattices, confusion networks, 
+and stack decoding), robustness (including MLLR adaptation), discriminative training,
+and human speech recognition.  <font size="-2"><a href="#top">(top)</a></font></p>
+
+
+<h3><a id="Chapter11" name="Chapter11"></a>Chapter 11: Computational Phonology (Formerly parts of Chapters 4, 5, and 7)</h3>
+This chapter is a brief introduction to computational phonology,
+including phonological and morphological learning, finite-state models,
+OT, and Stochastic OT.   <font size="-2"><a href="#top">(top)</a></font>
+
+
+					<h3><a id="Chapter12" name="Chapter12"></a>Chapter 12: Formal Grammars of English (Formerly 9)</h3>
+					<p>This
+chapter still focuses on CFGs for English and includes a revamped and
+somewhat expanded grammar for the ATIS domain. New and expanded
+sections cover: treebanks with a focus on the Penn Treebank, searching
+treebanks with tgrep and tgrep2, heads and head-finding rules,
+dependency grammars, Categorial grammar, and grammars for spoken
+language processing.   <font size="-2"><a href="#top">(top)</a></font></p>
+
+
+<h3><a id="Chapter13" name="Chapter13"></a>Chapter 13: Syntactic Parsing (Formerly 10)</h3>
+					<p>The
+focus of this chapter is still on parsing with CFGs. It now includes
+sections on CKY, Earley and agenda-based (chart) parsing. In addition,
+there is a new section on partial parsing with a focus on machine
+learning based base-phrase chunking and the use of IOB tags.   <font size="-2"><a href="#top">(top)</a></font></p>
+
+<h3><a id="Chapter14" name="Chapter14"></a>Chapter 14: Statistical Parsing (Formerly 12)</h3>
+
+<p>
+This statistical parsing chapter has been extensively revised. It now
+covers PCFGs, probabilistic CKY parsing, parent annotations, the Collins parser,
+and touches on advanced topics such as discriminative reranking and parsing for
+language modeling.
+  <font size="-2"><a href="#top">(top)</a></font></p>
+
+<h3><a id="Chapter15" name="Chapter15"></a>Chapter 15: Features and Unification (Formerly 11)</h3>
+
+<p>
+Mainly bug fixes.
+  <font size="-2"><a href="#top">(top)</a></font></p>
+
+
+<h3><a id="Chapter16" name="Chapter16"></a>Chapter 16: Language and Complexity (Formerly 13)</h3>
+
+<p>
+Mainly bug fixes.
+  <font size="-2"><a href="#top">(top)</a></font></p>
+
+
+
+<h3><a id="Chapter17" name="Chapter17"></a>Chapter 17: The Representation of Meaning (Formerly 14)</h3>
+					<p>This
+chapter still covers basic notions surrounding meaning representation
+languages. It now has better coverage of model-theoretic semantics for
+meaning representations, and a new section on Description Logics and
+their role as a basis for OWL and its role in the Semantic Web.   <font size="-2"><a href="#top">(top)</a></font></p>
+
+
+<h3><a id="Chapter18" name="Chapter18"></a>Chapter 18: Computational Semantics (Formerly 15)</h3>
+<p>This chapter covers compositional approaches to semantic analysis at the sentence level. The primary focus is
+on rule-to-rule approaches based on lambda-expressions. It also now has new coverage of unification-based
+approaches to computational semantics.  Coverage in the old chapter 15 on semantic grammars has been moved to the
+discourse chapter; coverage of information extraction has been expanded and moved to the new chapter 22. 
+  <font size="-2"><a href="#top">(top)</a></font></p>
+
+<h3><a id="Chapter19" name="Chapter19"></a>Chapter 19: Lexical Semantics (Formerly 16)</h3>
+					<p>
+This chapter still covers the basics of lexical semantics, including
+sense relations, semantic roles, and primitive decomposition. The
+treatment of semantic roles has been updated, as has the coverage of
+WordNet, and new sections added for PropBank and FrameNet.   <font size="-2"><a href="#top">(top)</a></font></p>
+
+<h3><a id="Chapter20" name="Chapter20"></a>Chapter 20: Computational Lexical Semantics (New Chapter; Parts of old Chs. 15, 16 and 17)</h3>
+					<p>The
+focus of this new chapter is on computing with word meanings. The three
+main topics are word sense disambiguation, computing relations between
+words (similarity, hyponymy, etc.), and semantic role labeling. It
+considerably expands the treatment of these topics.   <font size="-2"><a href="#top">(top)</a></font></p>
+
+
+<h3><a id="Chapter21" name="Chapter21"></a>Chapter 21: Computational Discourse</h3>
+					<p>This rewritten chapter includes a number of updates to the first edition.
+The anaphora resolution section is updated to include modern log-linear
+methods, and a section on the more general problem of coreference is also included.
+The coherence section describes cue-based methods for rhetorical relation and coherence relation extraction.
+Finally, there is a significant new section on discourse segmentation (including TextTiling).
+<font size="-2">
+<a href="#top">(top)</a></font></p>
+
+
+<h3><a id="Chapter22" name="Chapter22"></a>Chapter 22: Information Extraction (New chapter: Parts of old 15)</h3>
+					<p>This new chapter surveys current approaches to information extraction. The main topics are named entity recognition,
+relation detection, temporal expression analysis and template-filling. The primary focus is on supervised machine learning approaches to these topics.  The coverage on mostly finite-state methods (FASTUS) has been moved from the old Ch. 15 to here.
+  <font size="-2"><a href="#top">(top)</a></font></p>
+
+
+<h3><a id="Chapter23" name="Chapter23"></a>Chapter 23: Question Answering and Summarization (Mostly new; Parts of old 17 and 20)</h3>
+<p>
+This new chapter covers two applications, question answering and summarization.
+A brief introduction to the necessary background material from information retrieval is also included.
+The chapter includes factoid question answering, single document summarization,
+generic multiple document summarization, and query-focused summarization.
+ <font size="-2"><a href="#top">(top)</a></font></p>
+
+
+<h3><a id="Chapter24" name="Chapter24"></a>Chapter 24: Dialog and Conversational Agents (Formerly 19)</h3>
+<p>This
+is a completely rewritten version of the dialogue chapter. It includes
+much more information on modern dialogue systems, including VoiceXML,
+confirmation and clarification dialogues, the information-state model,
+markov decision processes, and other current approaches to dialogue
+agents.   <font size="-2"><a href="#top">(top)</a></font></p>
+
+<h3><a id="Chapter25" name="Chapter25"></a>Chapter 25: Machine Translation </h3>
+
+<p>The
+MT chapter has been extensively rewritten and a significant new section
+added covering statistical MT, including IBM Model 1, Model 3, and HMM
+alignment. A new evaluation section covering human evaluation and Bleu
+has also been added, as well as sections on SYSTRAN and more details on
+cross-linguistic divergences.  <font size="-2"><a href="#top">(top)</a></font></p>
+				</td>
+			</tr>
+				<tr>
+					<td valign="top" width="335"></td>
+				</tr>
+			</tbody></table>
+			<p></p>
+	</body></html>
