@@ -1,5 +1,9 @@
 //Coded by Hikari
 
+
+//known bug where program will run forever if none of the training data set for a person has a value for one of the data points
+//this is a fringe case and should never happen under normal operation, any data set we plan to use the program with should have at least 1 value for each data point
+
 #include <vector>
 #include <filesystem>
 #include <string>
