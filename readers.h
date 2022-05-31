@@ -1,6 +1,8 @@
 #include <string>
 #include <vector>
 #include <cctype>
+#include <array>
+
 using namespace std;
 
 //not used to simply statistics

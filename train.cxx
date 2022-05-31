@@ -183,16 +183,17 @@ array<float, 10> train(string a)
         std::cout << i << ", ";
     }
     */
-    info[0] = (float)icount;
-    info[1] = (float)(eSpace / ecount);
-    info[2] = (float)(tspace / tcount);
-    info[3] = (float)(mspace / linec);
-    info[4] = (float)(verbose / nVerbose);
-    info[5] = (float)(dots / newLine);
-    info[6] = (float)((sinc + sdec) / total);
-    info[7] = (float)((cinc + cdec) / total);
-    info[8] = (float)((vinc + vdec) / total);
-    info[9] = r;
+   //prevents any /0 errors
+    info[0] = (icount!=0) ? (float)icount : 0;
+    info[1] = (ecount!=0) ? (float)(eSpace / ecount) : 0;
+    info[2] = (tcount!=0) ? (float)(tspace / tcount) : 0;
+    info[3] = (linec!=0) ? (float)(mspace / linec) : 0;
+    info[4] = (nVerbose!=0) ? (float)(verbose / nVerbose) : 0;
+    info[5] = (newLine!=0) ? (float)(dots / newLine) : 0;
+    info[6] = (total!=0) ? (float)((sinc + sdec) / total) : 0;
+    info[7] = (total!=0) ? (float)((cinc + cdec) / total) : 0;
+    info[8] = (total!=0) ? (float)((vinc + vdec) / total) : 0;
+    info[9] = (r!=0) ? r : 0;
 
     return info;
 
